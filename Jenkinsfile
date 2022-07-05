@@ -6,7 +6,8 @@ pipeline {
       when {
         expression {
           sh "git fetch --no-tags --progress -- ${env.GIT_URL} +refs/heads/main:refs/remotes/upstream/main"
-          sh "git diff --name-only HEAD~ origin/main"
+          diff = sh(returnStdout: true, script: "git diff --name-only HEAD~ origin/main | grep -q ^py/").trim()
+          echo "diff=${diff}"
           return true
         }
       }
