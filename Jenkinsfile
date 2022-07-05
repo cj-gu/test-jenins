@@ -5,7 +5,7 @@ pipeline {
     stage('Example') {
       steps {
         echo "hello"
-        sh "git diff master HEAD~"
+        sh "git diff +refs/heads/master:refs/remotes/upstream/master HEAD~"
       }
     }
   }
