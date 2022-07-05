@@ -6,9 +6,8 @@ pipeline {
       when {
         expression {
           sh "git fetch --no-tags --progress -- ${env.GIT_URL} +refs/heads/main:refs/remotes/upstream/main"
-          diff = sh(returnStdout: true, script: "git diff --name-only HEAD~ origin/main | grep ^py/ | sed -n '\$='").trim()
-          echo "diff=${diff}"
-          if ((Integer.parseInt(diff) >= 0)) {
+          diff = sh(returnStdout: true, script: "git diff --name-only HEAD~ origin/main | grep ^py/ | sed -n '\$='").trim().length()
+          if ((diff > 0)) {
             echo "MATCH"
             return true
           } else {
