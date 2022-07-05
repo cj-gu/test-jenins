@@ -5,6 +5,7 @@ pipeline {
     stage('Example') {
       steps {
         echo "hello"
+        sh "git diff HEAD HEAD~"
       }
     }
   }
