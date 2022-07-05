@@ -10,7 +10,7 @@ pipeline {
           def target_branch = env.CHANGE_TARGET;
           def pr_ref        = env.BRANCH_NAME;
           echo sh(returnStdout: true, script: 'env')
-          sh "git fetch --no-tags --progress -- ${env.GIT_URL} +refs/heads/master:refs/remotes/upstream/master"
+          sh "git fetch origin master:refs/remotes/origin/master"
           sh "git diff HEAD~ upstream/master"
           def TARGET = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
           def HEAD   = sh(returnStdout: true, script: "git rev-parse origin/${pr_ref}").trim()
