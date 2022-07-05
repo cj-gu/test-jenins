@@ -8,7 +8,13 @@ pipeline {
           sh "git fetch --no-tags --progress -- ${env.GIT_URL} +refs/heads/main:refs/remotes/upstream/main"
           diff = sh(returnStdout: true, script: "git diff --name-only HEAD~ origin/main | grep ^py/ | sed -n '\$='").trim()
           echo "diff=${diff}"
-          return true
+          if ((diff >= 0)) {
+            echo "MATCH"
+            return true
+          } else {
+            echo "NO_MATCH"
+            return false
+          }
         }
       }
       steps {
