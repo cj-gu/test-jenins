@@ -3,6 +3,13 @@ pipeline {
 
   stages {
     stage('Example') {
+      when {
+        expression {
+          sh "git fetch --no-tags --progress -- ${env.GIT_URL} +refs/heads/main:refs/remotes/upstream/main"
+          sh "git diff --name-only HEAD~ origin/main"
+          return true
+        }
+      }
       steps {
         echo "hello"
         // sh "git diff upstream/master HEAD~"
